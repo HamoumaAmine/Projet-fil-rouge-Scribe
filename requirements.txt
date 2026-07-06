@@ -1,0 +1,2 @@
+# Dépendances de Scribe
+# (complété au fil du TP : groq, python-dotenv...)
