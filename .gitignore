@@ -21,3 +21,4 @@ Thumbs.db
 
 # Comptes rendus générés
 comptes_rendus/*.md
+comptes_rendus/*.json
