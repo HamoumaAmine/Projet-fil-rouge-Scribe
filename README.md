@@ -10,6 +10,12 @@ Scribe est un outil en ligne de commande qui transforme un enregistrement audio
 3. Un LLM reformule ce texte en compte rendu structuré : titre, points clés,
    décisions, actions.
 
+4. Avant de rédiger le compte rendu, un agent de modération analyse la transcription et
+rejette poliment les contenus qui tentent de détourner l'outil de sa fonction (par
+exemple des instructions d'injection). Cet agent est lui-même protégé contre l'injection
+de prompt en traitant la transcription comme une donnée à analyser, jamais comme des
+instructions à exécuter.
+
 Les modèles sont appelés via l'API serverless de Groq.
 
 ## Structure du projet
