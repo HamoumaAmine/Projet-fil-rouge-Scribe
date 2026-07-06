@@ -54,3 +54,17 @@ Utilité pour une évolution future de Scribe : les horodatages permettraient de
 des comptes rendus avec renvois temporels (ex : "décision prise à 00:05"), la langue
 détectée permettrait un traitement multilingue, et les indicateurs de confiance
 pourraient signaler les passages mal transcrits à vérifier.
+
+**Q4 — Quelle température choisissez-vous pour cet usage, et pourquoi ?**
+Température basse (0.2). Pour un compte rendu, on veut un résultat fidèle, factuel et
+reproductible, pas de la créativité. Une température basse rend le modèle plus
+déterministe et réduit le risque qu'il invente ou reformule de façon hasardeuse. Une
+température élevée conviendrait à de la génération créative, ce qui n'est pas le cas ici.
+
+**Q5 — Le prompt système est envoyé à chaque requête : quel lien avec les tokens en cache ?**
+Le prompt système est identique et volumineux à chaque appel. Les fournisseurs comme Groq
+peuvent mettre en cache le préfixe commun des requêtes (prompt caching) : les tokens du
+prompt système, réutilisés à l'identique, n'ont pas à être recalculés intégralement à
+chaque fois. Cela réduit la latence et le coût. D'où l'intérêt de garder un prompt système
+stable et placé en tête de requête : plus le préfixe est constant, plus le cache est
+efficace. À l'inverse, modifier le prompt système à chaque appel casserait ce cache.
