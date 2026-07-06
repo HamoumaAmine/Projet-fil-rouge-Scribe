@@ -44,8 +44,12 @@ Lancer Scribe en lui donnant un fichier audio :
     python -m src.main audio_examples/reunion_test.mp3
 
 Scribe transcrit l'audio, génère un compte rendu structuré (titre, résumé, points
-clés, décisions et actions), l'affiche à l'écran et le sauvegarde dans un fichier
-Markdown daté du dossier `comptes_rendus/`.
+clés, décisions et actions), l'affiche à l'écran et le sauvegarde dans le dossier `comptes_rendus/`.
+
+Le compte rendu est produit par le LLM en JSON mode (réponse JSON structurée), puis
+sauvegardé sous deux formes datées dans `comptes_rendus/` : un fichier `.json`
+structuré (titre, résumé, points clés, décisions/actions) et un fichier `.md` lisible
+reconstruit à partir de ce JSON.
 
 ## Réponses aux questions
 

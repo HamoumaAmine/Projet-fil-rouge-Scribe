@@ -1,16 +1,18 @@
 """Scribe — point d'entrée en ligne de commande.
 
 Usage : python -m src.main <chemin_audio>
-Enchaîne transcription puis compte rendu, affiche et sauvegarde le résultat.
+Enchaîne transcription puis compte rendu (JSON mode), affiche le résultat et
+sauvegarde deux fichiers datés : un .json structuré et un .md lisible.
 """
 
 import sys
 import os
+import json
 from datetime import datetime
 
 from src.config import check_config
 from src.transcription import transcrire
-from src.summary import resumer
+from src.summary import resumer, json_vers_markdown
 
 
 def main():
@@ -27,7 +29,7 @@ def main():
         transcription = transcrire(chemin_audio)
 
         print("[2/2] Rédaction du compte rendu en cours...")
-        compte_rendu = resumer(transcription)
+        data = resumer(transcription)
     except FileNotFoundError as e:
         print(f"Erreur : {e}", file=sys.stderr)
         sys.exit(1)
@@ -35,16 +37,23 @@ def main():
         print(f"Erreur : {e}", file=sys.stderr)
         sys.exit(1)
 
-    print("\n--- Compte rendu ---\n")
-    print(compte_rendu)
+    markdown = json_vers_markdown(data)
 
+    # Affichage à l'écran
+    print("\n--- Compte rendu ---\n")
+    print(markdown)
+
+    # Sauvegarde des deux fichiers datés
     os.makedirs("comptes_rendus", exist_ok=True)
     horodatage = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    chemin_sortie = os.path.join("comptes_rendus", f"compte_rendu_{horodatage}.md")
-    with open(chemin_sortie, "w", encoding="utf-8") as f:
-        f.write(compte_rendu)
+    base = os.path.join("comptes_rendus", f"compte_rendu_{horodatage}")
 
-    print(f"\nCompte rendu sauvegardé dans : {chemin_sortie}")
+    with open(base + ".json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    with open(base + ".md", "w", encoding="utf-8") as f:
+        f.write(markdown)
+
+    print(f"\nCompte rendu sauvegardé dans :\n- {base}.json\n- {base}.md")
 
 
 if __name__ == "__main__":
