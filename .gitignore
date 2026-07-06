@@ -22,3 +22,11 @@ Thumbs.db
 # Comptes rendus générés
 comptes_rendus/*.md
 comptes_rendus/*.json
+
+# Ignore tous les audios sauf l'exemple de test versionné
+audio_examples/*.mp3
+!audio_examples/reunion_test.mp3
+
+# Garde un exemple de compte rendu versionné
+!comptes_rendus/exemple_compte_rendu.md
+!comptes_rendus/exemple_compte_rendu.json

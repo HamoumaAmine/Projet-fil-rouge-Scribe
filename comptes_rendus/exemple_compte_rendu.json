@@ -1,0 +1,10 @@
+{
+  "titre": "Lancement du projet Scribe",
+  "resume": "La réunion a porté sur le lancement du projet Scribe. Le projet utilisera l'API Grock pour la transcription audio. Une démonstration est prévue pour vendredi prochain.",
+  "points_cles": [
+    "Utilisation de l'API Grock pour la transcription audio"
+  ],
+  "decisions_actions": [
+    "Amine préparera la démonstration pour vendredi prochain"
+  ]
+}
