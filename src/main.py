@@ -1,8 +1,8 @@
 """Scribe — point d'entrée en ligne de commande.
 
 Usage : python -m src.main <chemin_audio>
-Enchaîne transcription puis compte rendu (JSON mode), affiche le résultat et
-sauvegarde deux fichiers datés : un .json structuré et un .md lisible.
+Enchaîne transcription, modération, puis compte rendu (JSON mode). Affiche le
+résultat et sauvegarde deux fichiers datés : un .json structuré et un .md lisible.
 """
 
 import sys
@@ -12,6 +12,7 @@ from datetime import datetime
 
 from src.config import check_config
 from src.transcription import transcrire
+from src.moderation import moderer
 from src.summary import resumer, json_vers_markdown
 
 
@@ -25,10 +26,18 @@ def main():
     chemin_audio = sys.argv[1]
 
     try:
-        print(f"[1/2] Transcription de {chemin_audio} en cours...")
+        print(f"[1/3] Transcription de {chemin_audio} en cours...")
         transcription = transcrire(chemin_audio)
 
-        print("[2/2] Rédaction du compte rendu en cours...")
+        print("[2/3] Vérification du contenu en cours...")
+        verdict = moderer(transcription)
+        if not verdict.get("legitime", True):
+            print("\nScribe a détecté un contenu qui ne correspond pas à un usage "
+                  "légitime de l'outil et ne peut pas générer de compte rendu.")
+            print(f"Raison : {verdict.get('raison', 'non précisée')}")
+            sys.exit(0)
+
+        print("[3/3] Rédaction du compte rendu en cours...")
         data = resumer(transcription)
     except FileNotFoundError as e:
         print(f"Erreur : {e}", file=sys.stderr)
@@ -39,11 +48,9 @@ def main():
 
     markdown = json_vers_markdown(data)
 
-    # Affichage à l'écran
     print("\n--- Compte rendu ---\n")
     print(markdown)
 
-    # Sauvegarde des deux fichiers datés
     os.makedirs("comptes_rendus", exist_ok=True)
     horodatage = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     base = os.path.join("comptes_rendus", f"compte_rendu_{horodatage}")
