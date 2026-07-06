@@ -21,8 +21,9 @@ Les modèles sont appelés via l'API serverless de Groq.
 ## Structure du projet
 
 - `src/` : code source de Scribe
-- `prompts/` : prompts système utilisés par le LLM
+- `prompts/` : prompts système du LLM (compte rendu et modération)
 - `audio_examples/` : fichiers audio d'exemple pour les tests
+- `comptes_rendus/` : comptes rendus générés (.json + .md), avec un exemple versionné
 
 ## Installation
 
