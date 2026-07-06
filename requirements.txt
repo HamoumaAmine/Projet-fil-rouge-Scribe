@@ -1,2 +1,3 @@
-# Dépendances de Scribe
-# (complété au fil du TP : groq, python-dotenv...)
+# Dependances de Scribe
+groq
+python-dotenv
