@@ -1,0 +1,3 @@
+# Dependances de Scribe
+groq
+python-dotenv
