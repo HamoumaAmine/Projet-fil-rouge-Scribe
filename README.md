@@ -20,11 +20,32 @@ Les modèles sont appelés via l'API serverless de Groq.
 
 ## Installation
 
-_(à compléter)_
+Cloner le dépôt :
+
+    git clone https://github.com/HamoumaAmine/Projet-fil-rouge-Scribe.git
+    cd Projet-fil-rouge-Scribe
+
+Créer et activer un environnement virtuel :
+
+    python -m venv venv
+    source venv/Scripts/activate
+
+Installer les dépendances :
+
+    pip install -r requirements.txt
+
+Configurer la clé API : copier `.env.example` vers `.env` et y renseigner votre
+clé `GROQ_API_KEY` obtenue sur https://console.groq.com.
 
 ## Utilisation
 
-_(à compléter)_
+Lancer Scribe en lui donnant un fichier audio :
+
+    python -m src.main audio_examples/reunion_test.mp3
+
+Scribe transcrit l'audio, génère un compte rendu structuré (titre, résumé, points
+clés, décisions et actions), l'affiche à l'écran et le sauvegarde dans un fichier
+Markdown daté du dossier `comptes_rendus/`.
 
 ## Réponses aux questions
 
